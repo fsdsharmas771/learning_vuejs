@@ -46,14 +46,27 @@
         </ul>
         <!-- passing data prof parent to child component -->
         <Child name='Tarun' :users='users' :getName='getName' />
+        <ul>
+            <li v-for='item in users' :key="item">
+                <User :data=item :getName='getName' />
+            </li>
+        </ul>
+        <!-- class binding -->
+        <h1 :class="{background:background,border:border,round_corner:true}"> 1st Class Binding Methoda </h1>
+        <button v-on:click="background=!background,border=!border">Toggle Style</button>
+        <h1 :class="getClass"> 2nd Class Binding Method</h1>
+        
     </div>
 </template>
 <script>
-import Child from './ChildComponent.vue'
+    import User from './User.vue';
+    import Child from './ChildComponent.vue';
+
 export default {
     name: "Home",
     components:{
         Child,
+        User
     },
     data(){
         return{
@@ -71,8 +84,14 @@ export default {
             {
                 name:'Charul',
                 email:'fsdsharmas771@gmail.com'
+            },
+            {
+                name:'Sheetal',
+                email:'taruns771@gmail.com'
             }
-            ]
+            ],
+            background:false,
+            border:false
         }
     },
     methods: {
@@ -86,14 +105,34 @@ export default {
         getConsole(){
             console.log("h1 is hovered");
         },
-        getName(n){
-            alert(n);
-        }
+        getName(name){
+            alert(name);
+        },
     },
+    computed:{
+        getClass(){
+            return{
+                background:this.background,
+                border:this.border,
+                round_corner:false
+            }
+        }
+    }
 };
 </script>
 <style scoped>
 h1 {
     color: red;
+}
+.background{
+    background-color: brown;
+    color: white;
+}
+.border{
+    border: 4px solid black;
+    padding: 5px;
+}
+.round_corner{
+    border-radius: 25px;
 }
 </style>
